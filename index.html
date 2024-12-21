@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text-to-Image Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 50%, #00d4ff 100%);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #333;
+    }
+
+    h1 {
+      margin-bottom: 15px;
+      color: #000000;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    #promptInput {
+      width: 80%;
+      max-width: 400px;
+      padding: 8px;
+      border: 2px solid #4a4a8f;
+      border-radius: 5px;
+      outline: none;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    #promptInput:focus {
+      border-color: #4a8feb;
+    }
+
+    button {
+      background: #0010cb;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #367bd6;
+    }
+
+    button:disabled {
+      background: #a7c1eb;
+      cursor: not-allowed;
+    }
+
+    #result {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    #generatedImage {
+      max-width: 90%;
+      height: auto;
+      margin-top: 15px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      display: none;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    #downloadButton {
+      display: none;
+      margin-top: 10px;
+      padding: 8px 16px;
+      background: #000000;
+      color: white;
+      border: none;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #downloadButton:hover {
+      background: #6b4040;
+    }
+
+    .loader {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #4a8feb;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #error {
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      h1{
+        color:#000000;
+      }
+      #promptInput {
+        font-size: 12px;
+        padding: 6px;
+      }
+
+      button {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+
+      #generatedImage {
+        margin-top: 10px;
+      }
+
+      #downloadButton {
+        padding: 6px 12px;
+      }
+    }
+
+   
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      position: relative;
+      background-color: #fff;
+      margin: auto;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    .modal-content img {
+      width: 100%;
+      max-height: 80vh;
+      border-radius: 5px;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      color: #333;
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: #ff0000;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>AI Text-to-Image Generator</h1>
+  <input type="text" id="promptInput" placeholder="Enter your prompt here...">
+  <button id="generateButton" onclick="generateImage()">Generate Image</button>
+
+  <div id="result">
+    <div id="loader" class="loader" style="display: none;"></div>
+    <img id="generatedImage" alt="Generated Image" onclick="openModal()" title="Click to view in full size">
+    <button id="downloadButton" onclick="downloadImage()">Download Image</button>
+    <p id="error" style="display: none;"></p>
+  </div>
+
+
+  <div id="imageModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <img id="modalImage" alt="Full-size image">
+    </div>
+  </div>
+
+  <script src="imagine.js">
+    
+  </script>
+</body>
+</html>
