@@ -23,7 +23,7 @@ async function generateImage() {
   generateButton.disabled = true;
   loader.style.display = "block";
 
-  const apiUrl = `https://bk9.fun/ai/aiimg?q=${encodeURIComponent(prompt)}`;
+  const apiUrl = `https://bk9.fun/ai/magicstudio?prompt=${encodeURIComponent(prompt)}`;
   const proxiedUrl = `${proxyUrl}${encodeURIComponent(apiUrl)}`;
 
   try {
@@ -33,10 +33,9 @@ async function generateImage() {
       throw new Error(`API request failed with status ${response.status}`);
     }
 
-    const jsonResponse = await response.json();
-    const imageUrl = jsonResponse.BK9.aiImageData[0].imageHighResolution.url;
-    currentImageBlob = await fetch(imageUrl).then(res => res.blob());
+    currentImageBlob = await response.blob();
 
+    const imageUrl = URL.createObjectURL(currentImageBlob);
     generatedImage.src = imageUrl;
     generatedImage.style.display = "block";
     downloadButton.style.display = "block";
